@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harish L — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f7f6f3;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --border: rgba(0,0,0,0.1);
+      --border-hover: rgba(0,0,0,0.25);
+      --accent: #1a1a1a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110;
+        --bg-secondary: #1c1c1a;
+        --text: #f0ede8;
+        --text-secondary: #888884;
+        --border: rgba(255,255,255,0.1);
+        --border-hover: rgba(255,255,255,0.25);
+        --accent: #f0ede8;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color .15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 4rem 0 3rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 0.5px solid var(--border);
+      padding: 5px 13px;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .35; }
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 8vw, 64px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: .3rem;
+    }
+
+    .hero-name span {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .hero-role {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-bio {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-bio strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .stat {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* SECTIONS */
+    .sec {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .sec-label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .sec-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    /* SKILLS */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill {
+      font-size: 13px;
+      padding: 7px 15px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: border-color .15s;
+    }
+
+    .skill:hover { border-color: var(--border-hover); }
+    .skill i { font-size: 14px; color: var(--text-secondary); }
+
+    /* PROJECTS */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 12px;
+    }
+
+    .proj {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .proj:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .proj-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .proj-accent.ts { background: linear-gradient(90deg, #3178c6, #60a5fa); }
+    .proj-accent.js { background: linear-gradient(90deg, #f7df1e, #fbbf24); }
+    .proj-accent.py { background: linear-gradient(90deg, #3572a5, #34d399); }
+
+    .proj-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: .85rem;
+      margin-top: .35rem;
+      border: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+    }
+
+    .proj-icon i { font-size: 18px; color: var(--text-secondary); }
+
+    .proj-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    .proj-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 99px;
+      margin-bottom: .6rem;
+      font-weight: 500;
+    }
+
+    .tag-ts { background: #dbeafe; color: #1e40af; }
+    .tag-js { background: #fef9c3; color: #854d0e; }
+    .tag-py { background: #dcfce7; color: #166534; }
+
+    @media (prefers-color-scheme: dark) {
+      .tag-ts { background: #1e3a5f; color: #93c5fd; }
+      .tag-js { background: #3d2f00; color: #fde68a; }
+      .tag-py { background: #14301f; color: #6ee7b7; }
+    }
+
+    .proj-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* JOURNEY TIMELINE */
+    .journey { display: flex; flex-direction: column; gap: 0; }
+
+    .jitem {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0 18px;
+      position: relative;
+    }
+
+    .jitem:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 89px;
+      top: 24px;
+      bottom: -1rem;
+      width: 0.5px;
+      background: var(--border);
+    }
+
+    .jyear {
+      font-size: 12px;
+      color: var(--text-secondary);
+      padding-top: 4px;
+      text-align: right;
+    }
+
+    .jcontent { padding-bottom: 1.75rem; }
+
+    .jrole {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 3px;
+      color: var(--text);
+    }
+
+    .jorg {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* CONTACT */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .clink {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-family: 'Outfit', sans-serif;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 0.5px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      transition: background .15s, border-color .15s;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .clink:hover {
+      background: var(--bg-secondary);
+      border-color: var(--border-hover);
+    }
+
+    .clink i { font-size: 16px; color: var(--text-secondary); }
+    .clink-email { border-color: var(--border-hover); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 520px) {
+      .stats { grid-template-columns: repeat(3,1fr); }
+      .nav-links { display: none; }
+      .hero { padding: 2.5rem 0 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">Harish L.</a>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-chip"><span class="dot"></span> Open to opportunities</div>
+      <div class="hero-name">Harish L<span>.</span></div>
+      <div class="hero-role">Young Entrepreneur · Builder · Innovator</div>
+      <p class="hero-bio">
+        Passionate about <strong>technology, automation & AI</strong> — building ideas that solve real-world problems. I explore how systems work, how the future is evolving, and how digital tools can transform everyday life.<br><br>
+        From AI-powered tools to creative experiments, I enjoy <strong>turning imagination into reality</strong>. Technology, to me, is more than code — it's a way to think differently and create impact at scale.
+      </p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Projects built</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Languages used</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Ideas in queue</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="sec" id="skills">
+      <div class="sec-head"><span class="sec-label">Skills</span><div class="sec-line"></div></div>
+      <div class="skills">
+        <span class="skill"><i class="ti ti-code"></i> Beginner developer</span>
+        <span class="skill"><i class="ti ti-message-circle"></i> English communication</span>
+        <span class="skill"><i class="ti ti-bulb"></i> Fast learner</span>
+        <span class="skill"><i class="ti ti-robot"></i> AI & automation</span>
+        <span class="skill"><i class="ti ti-brand-typescript"></i> TypeScript</span>
+        <span class="skill"><i class="ti ti-brand-javascript"></i> JavaScript</span>
+        <span class="skill"><i class="ti ti-brand-python"></i> Python</span>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="sec" id="projects">
+      <div class="sec-head"><span class="sec-label">Projects</span><div class="sec-line"></div></div>
+      <div class="projects">
+
+        <div class="proj">
+          <div class="proj-accent ts"></div>
+          <div class="proj-icon"><i class="ti ti-sparkles"></i></div>
+          <div class="proj-title">UIgen</div>
+          <span class="proj-tag tag-ts">TypeScript</span>
+          <p class="proj-desc">An AI model that generates simple, minimal UI interactions — clean, focused, and fast.</p>
+        </div>
+
+        <div class="proj">
+          <div class="proj-accent js"></div>
+          <div class="proj-icon"><i class="ti ti-checklist"></i></div>
+          <div class="proj-title">Essence Todo</div>
+          <span class="proj-tag tag-js">JavaScript</span>
+          <p class="proj-desc">A habit tracker & note-taking app with a built-in personal habit mentor to keep you accountable.</p>
+        </div>
+
+        <div class="proj">
+          <div class="proj-accent py"></div>
+          <div class="proj-icon"><i class="ti ti-microphone"></i></div>
+          <div class="proj-title">JARVIS</div>
+          <span class="proj-tag tag-py">Python</span>
+          <p class="proj-desc">An AI voice assistant — smart, responsive, and always ready to help with commands and queries.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section class="sec" id="journey">
+      <div class="sec-head"><span class="sec-label">Journey</span><div class="sec-line"></div></div>
+      <div class="journey">
+        <div class="jitem">
+          <span class="jyear">Now</span>
+          <div class="jcontent">
+            <div class="jrole">Self-taught builder & learner</div>
+            <div class="jorg">Actively exploring AI, automation & full-stack development through real projects</div>
+          </div>
+        </div>
+        <div class="jitem">
+          <span class="jyear">2024</span>
+          <div class="jcontent">
+            <div class="jrole">Started coding journey</div>
+            <div class="jorg">Built first projects — UIgen, Essence Todo & JARVIS — learning by doing</div>
+          </div>
+        </div>
+        <div class="jitem">
+          <span class="jyear">Always</span>
+          <div class="jcontent">
+            <div class="jrole">Curious mind</div>
+            <div class="jorg">Exploring how technology can reshape the world — one idea at a time</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="sec" id="contact">
+      <div class="sec-head"><span class="sec-label">Get in touch</span><div class="sec-line"></div></div>
+      <div class="contact-links">
+        <a class="clink clink-email" href="mailto:harishlaptop0123@gmail.com">
+          <i class="ti ti-mail"></i> harishlaptop0123@gmail.com
+        </a>
+        <a class="clink" href="https://github.com/harishlaptop0123-web" target="_blank" rel="noopener">
+          <i class="ti ti-brand-github"></i> GitHub
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/harish-loganathan-548b48363" target="_blank" rel="noopener">
+          <i class="ti ti-brand-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <footer>Crafted with curiosity by Harish L · 2025</footer>
+
+  </div>
+
+</body>
+</html>
