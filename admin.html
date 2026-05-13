@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Harish L</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #111110; --bg2: #1c1c1a; --bg3: #242422;
+      --text: #f0ede8; --text2: #888884;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+      --green: #22c55e; --red: #ef4444; --blue: #3b82f6;
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .login-box { background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; }
+    .login-logo { font-size: 22px; font-weight: 600; margin-bottom: .25rem; }
+    .login-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+    .field input { width: 100%; background: var(--bg3); border: 0.5px solid var(--border2); border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: 'Outfit', sans-serif; color: var(--text); outline: none; transition: border-color .15s; }
+    .field input:focus { border-color: var(--blue); }
+    .btn-login { width: 100%; background: var(--text); color: var(--bg); border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; font-family: 'Outfit', sans-serif; cursor: pointer; transition: opacity .15s; margin-top: .5rem; }
+    .btn-login:hover { opacity: .85; }
+    .login-err { font-size: 13px; color: var(--red); margin-top: .75rem; text-align: center; min-height: 20px; }
+
+    /* DASHBOARD */
+    .dash { display: none; }
+    .topbar { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    .topbar-logo { font-size: 16px; font-weight: 600; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .badge-online { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+    .dot-green { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    .btn-logout { font-size: 13px; font-family: 'Outfit', sans-serif; background: transparent; border: 0.5px solid var(--border2); color: var(--text2); padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all .15s; }
+    .btn-logout:hover { color: var(--text); border-color: var(--text2); }
+
+    .dash-body { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .dash-title { font-size: 22px; font-weight: 600; margin-bottom: .25rem; }
+    .dash-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2rem; }
+    .stat-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+    .stat-card-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
+    .stat-card-icon i { font-size: 18px; color: var(--text2); }
+    .stat-card-num { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 4px; }
+    .stat-card-label { font-size: 12px; color: var(--text2); }
+
+    /* MESSAGES */
+    .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .sec-title { font-size: 15px; font-weight: 500; }
+    .btn-refresh { font-size: 12px; font-family: 'Outfit', sans-serif; background: transparent; border: 0.5px solid var(--border2); color: var(--text2); padding: 5px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .15s; }
+    .btn-refresh:hover { color: var(--text); }
+
+    .msg-list { display: flex; flex-direction: column; gap: 10px; }
+    .msg-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: border-color .15s; }
+    .msg-card:hover { border-color: var(--border2); }
+    .msg-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .5rem; }
+    .msg-name { font-size: 15px; font-weight: 500; }
+    .msg-time { font-size: 11px; color: var(--text2); }
+    .msg-email { font-size: 13px; color: var(--blue); margin-bottom: .6rem; }
+    .msg-body { font-size: 14px; color: var(--text2); line-height: 1.65; }
+    .msg-empty { text-align: center; padding: 3rem; color: var(--text2); font-size: 14px; }
+
+    .loading { text-align: center; padding: 2rem; color: var(--text2); font-size: 14px; }
+
+    @media (max-width: 520px) { .stats-row { grid-template-columns: 1fr 1fr; } .dash-body { padding: 1rem; } }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">Harish L. — Admin</div>
+    <div class="login-sub">Sign in to access your dashboard</div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="emailInput" placeholder="your@email.com" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="passInput" placeholder="••••••••" />
+    </div>
+    <button class="btn-login" onclick="login()">Sign in</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dash">
+  <div class="topbar">
+    <div class="topbar-logo">⚡ Admin Panel</div>
+    <div class="topbar-right">
+      <div class="badge-online"><span class="dot-green"></span> Logged in</div>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <div class="dash-title">Welcome back, Harish 👋</div>
+    <div class="dash-sub" id="lastSeen">Loading stats...</div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-icon"><i class="ti ti-mail"></i></div>
+        <div class="stat-card-num" id="totalMessages">—</div>
+        <div class="stat-card-label">Total messages</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon"><i class="ti ti-eye"></i></div>
+        <div class="stat-card-num" id="totalViews">—</div>
+        <div class="stat-card-label">Page views</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon"><i class="ti ti-calendar"></i></div>
+        <div class="stat-card-num" id="todayViews">—</div>
+        <div class="stat-card-label">Views today</div>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <div class="sec-title">📬 Contact Messages</div>
+      <button class="btn-refresh" onclick="loadData()"><i class="ti ti-refresh"></i> Refresh</button>
+    </div>
+    <div class="msg-list" id="msgList">
+      <div class="loading">Loading messages...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://ngaejgxfhkowpacznlim.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5nYWVqZ3hmaGtvd3BhY3pubGltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NTkzNDcsImV4cCI6MjA5NDIzNTM0N30.6EVm_WImMBdxwWMIkxpQatwTQ7XIFw6Cl42C1Cngi6A';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function login() {
+    const email = document.getElementById('emailInput').value;
+    const pass = document.getElementById('passInput').value;
+    const err = document.getElementById('loginErr');
+    err.textContent = 'Signing in...';
+    const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+    if (error) { err.textContent = error.message; return; }
+    showDash();
+  }
+
+  async function logout() {
+    await sb.auth.signOut();
+    document.getElementById('dash').style.display = 'none';
+    document.getElementById('loginWrap').style.display = 'flex';
+  }
+
+  function showDash() {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dash').style.display = 'block';
+    loadData();
+  }
+
+  async function loadData() {
+    // Messages
+    const { data: msgs, error: mErr } = await sb.from('messages').select('*').order('created_at', { ascending: false });
+    if (!mErr) {
+      document.getElementById('totalMessages').textContent = msgs.length;
+      renderMessages(msgs);
+    }
+
+    // Page views
+    const { data: views, error: vErr } = await sb.from('page_views').select('*');
+    if (!vErr) {
+      document.getElementById('totalViews').textContent = views.length;
+      const today = new Date().toISOString().split('T')[0];
+      const todayCount = views.filter(v => v.visited_at?.startsWith(today)).length;
+      document.getElementById('todayViews').textContent = todayCount;
+    }
+
+    document.getElementById('lastSeen').textContent = 'Last refreshed: ' + new Date().toLocaleTimeString();
+  }
+
+  function renderMessages(msgs) {
+    const list = document.getElementById('msgList');
+    if (!msgs || msgs.length === 0) {
+      list.innerHTML = '<div class="msg-empty">No messages yet. Share your portfolio! 🚀</div>';
+      return;
+    }
+    list.innerHTML = msgs.map(m => `
+      <div class="msg-card">
+        <div class="msg-top">
+          <div class="msg-name">${m.name}</div>
+          <div class="msg-time">${new Date(m.created_at).toLocaleString()}</div>
+        </div>
+        <div class="msg-email"><i class="ti ti-mail" style="font-size:13px"></i> ${m.email}</div>
+        <div class="msg-body">${m.message}</div>
+      </div>
+    `).join('');
+  }
+
+  // Auto check session
+  sb.auth.getSession().then(({ data }) => {
+    if (data.session) showDash();
+  });
+
+  // Enter key login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+</script>
+</body>
+</html>
