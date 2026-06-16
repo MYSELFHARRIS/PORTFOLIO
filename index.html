@@ -269,7 +269,6 @@
   const EMAILJS_TEMPLATE_ID = 'template_206nf9l';  // Step 5
 
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-
   async function sendMessage() {
     const name    = document.getElementById('fname').value.trim();
     const email   = document.getElementById('femail').value.trim();
@@ -285,31 +284,28 @@
     msg.textContent = 'Sending…';
     msg.className = 'form-msg';
 
-    // 1️⃣  Save to Supabase (keeps your admin panel working)
-    const { error: dbErr } = await sb.from('messages').insert({ name, email, message });
+    // Try saving to Supabase (optional — don't block on failure)
+    sb.from('messages').insert({ name, email, message }).then(() => {});
 
-    // 2️⃣  Send email to harishlaptop0123@gmail.com via EmailJS
+    // Send email via EmailJS — this is the main delivery
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name:    name,
-        from_email:   email,
-        message:      message,
-        to_email:     'harishlaptop0123@gmail.com',
+        from_name:  name,
+        from_email: email,
+        message:    message,
+        to_email:   'harishlaptop0123@gmail.com',
       });
-    } catch (emailErr) {
-      console.error('EmailJS error:', emailErr);
-      // Still show success if Supabase worked — email is bonus
-    }
 
-    if (dbErr) {
-      msg.textContent = 'Something went wrong. Try emailing directly!';
-      msg.className = 'form-msg error';
-    } else {
       msg.textContent = '✅ Message sent! I\'ll get back to you soon.';
       msg.className = 'form-msg success';
       document.getElementById('fname').value    = '';
       document.getElementById('femail').value   = '';
       document.getElementById('fmessage').value = '';
+
+    } catch (err) {
+      console.error('Send error:', err);
+      msg.textContent = 'Something went wrong. Please email me directly at harishlaptop0123@gmail.com';
+      msg.className = 'form-msg error';
     }
   }
 </script>
