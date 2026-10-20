@@ -1,3 +1,5 @@
-MY PROTFOLIO 
+# Harish L - Portfolio
 
-THIS IS THE WEBPAGE AND A DOCUMENTED PAGE OF ME 
+https://harishinfo.vercel.app/
+
+Personal portfolio of Harish L — Entrepreneur · AI & Automation Builder.

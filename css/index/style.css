@@ -66,8 +66,10 @@ nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bott
   .tag-py { background: #14301f; color: #6ee7b7; }
 }
 .proj-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
-.proj-github { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); margin-top: .6rem; padding: 4px 10px; border-radius: 99px; border: 0.5px solid var(--border); transition: border-color .15s; }
+.proj-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .6rem; }
+.proj-github { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); padding: 4px 10px; border-radius: 99px; border: 0.5px solid var(--border); text-decoration: none; transition: border-color .15s, color .15s; }
 .proj:hover .proj-github { border-color: var(--border-hover); }
+.proj-github:hover { border-color: var(--text) !important; color: var(--text); }
 
 .journey { display: flex; flex-direction: column; }
 .jitem { display: grid; grid-template-columns: 90px 1fr; gap: 0 18px; position: relative; }

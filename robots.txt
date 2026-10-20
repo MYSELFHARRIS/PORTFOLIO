@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://harishinfo.vercel.app/sitemap.xml
