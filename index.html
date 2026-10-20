@@ -6,8 +6,18 @@
   <title>Harish L - Portfolio</title>
   <meta name="description" content="Harish L — Young Entrepreneur passionate about technology, automation & AI." />
   <meta property="og:title" content="Harish L — Portfolio" />
-  <meta property="og:description" content="Young Entrepreneur · Builder · Innovator — AI, automation & tech." />
+  <meta property="og:description" content="Entrepreneur · AI &amp; Automation Builder — AI, automation &amp; tech." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Harish L - Portfolio" />
+  <meta name="twitter:description" content="Entrepreneur · AI &amp; Automation Builder — AI, automation &amp; tech." />
+  <meta name="twitter:image" content="og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -37,7 +47,7 @@
       <div class="hero-meta">
         <div class="hero-chip"><span class="dot"></span> Open to opportunities</div>
         <div class="hero-name">Harish L<span>.</span></div>
-        <div class="hero-role">Young Entrepreneur · Builder · Innovator</div>
+        <div class="hero-role">Entrepreneur · AI &amp; Automation Builder</div>
       </div>
     </div>
     <p class="hero-bio">
@@ -45,22 +55,18 @@
       From AI-powered tools to creative experiments, I enjoy <strong>turning imagination into reality</strong>. Technology, to me, is more than code — it's a way to think differently and create impact at scale.
     </p>
     <div class="stats">
-      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Projects built</div></div>
-      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Languages used</div></div>
-      <div class="stat"><div class="stat-num">&#8734;</div><div class="stat-label">Ideas in queue</div></div>
+      <div class="stat"><div class="stat-num" id="statProjects">4</div><div class="stat-label">Projects built</div></div>
+      <div class="stat"><div class="stat-num" id="statLanguages">2</div><div class="stat-label">Languages used</div></div>
     </div>
   </section>
 
   <section class="sec" id="skills">
     <div class="sec-head"><span class="sec-label">Skills</span><div class="sec-line"></div></div>
     <div class="skills">
-      <span class="skill"><i class="ti ti-code"></i> Beginner developer</span>
-      <span class="skill"><i class="ti ti-message-circle"></i> English communication</span>
-      <span class="skill"><i class="ti ti-bulb"></i> Fast learner</span>
-      <span class="skill"><i class="ti ti-robot"></i> AI &amp; automation</span>
-      <span class="skill"><i class="ti ti-brand-typescript"></i> TypeScript</span>
-      <span class="skill"><i class="ti ti-brand-javascript"></i> JavaScript</span>
       <span class="skill"><i class="ti ti-brand-python"></i> Python</span>
+      <span class="skill"><i class="ti ti-brand-javascript"></i> JavaScript</span>
+      <span class="skill"><i class="ti ti-brand-typescript"></i> TypeScript</span>
+      <span class="skill"><i class="ti ti-robot"></i> AI &amp; automation</span>
     </div>
   </section>
 
@@ -159,7 +165,7 @@
     </form>
   </section>
 
-  <footer>Crafted with curiosity by Harish L &middot; 2026</footer>
+  <footer>Crafted with curiosity by Harish L &middot; <span id="currentYear">2026</span></footer>
 </div>
 
 <script>
@@ -223,6 +229,22 @@
       btnSend.innerHTML = originalBtnHtml;
     }
   });
+
+  // ─── DYNAMIC FOOTER YEAR & STATS ─────────────────────────────
+  const yearEl = document.getElementById('currentYear');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  const projectCards = document.querySelectorAll('.projects .proj');
+  const statProjects = document.getElementById('statProjects');
+  if (statProjects && projectCards.length) {
+    statProjects.textContent = projectCards.length;
+  }
+  const tags = document.querySelectorAll('.projects .proj-tag');
+  const uniqueLanguages = new Set(Array.from(tags).map(t => t.textContent.trim()));
+  const statLanguages = document.getElementById('statLanguages');
+  if (statLanguages && uniqueLanguages.size) {
+    statLanguages.textContent = uniqueLanguages.size;
+  }
 </script>
 </body>
 </html>
