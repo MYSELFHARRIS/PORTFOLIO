@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harish L — Portfolio</title>
+  <title>HARISH PORTFOLIO</title>
   <meta name="description" content="Harish L — Young Entrepreneur passionate about technology, automation & AI." />
   <meta property="og:title" content="Harish L — Portfolio" />
   <meta property="og:description" content="Young Entrepreneur · Builder · Innovator — AI, automation & tech." />
@@ -14,108 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #ffffff; --bg-secondary: #f7f6f3;
-      --text: #1a1a1a; --text-secondary: #6b6b6b;
-      --border: rgba(0,0,0,0.1); --border-hover: rgba(0,0,0,0.25);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #111110; --bg-secondary: #1c1c1a; --text: #f0ede8; --text-secondary: #888884; --border: rgba(255,255,255,0.1); --border-hover: rgba(255,255,255,0.25); }
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-    .container { max-width: 720px; margin: 0 auto; padding: 0 2rem 5rem; }
-
-    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 1rem 0; }
-    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color .15s; }
-    .nav-links a:hover { color: var(--text); }
-
-    .hero { padding: 3.5rem 0 2.5rem; }
-    .hero-top { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
-    .hero-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--border); flex-shrink: 0; }
-    .hero-meta { flex: 1; }
-    .hero-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-secondary); border: 0.5px solid var(--border); padding: 4px 12px; border-radius: 99px; margin-bottom: 0.6rem; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-    .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 52px); font-weight: 700; line-height: 1.05; letter-spacing: -.02em; margin-bottom: .2rem; }
-    .hero-name span { font-style: italic; font-weight: 400; color: var(--text-secondary); }
-    .hero-role { font-size: 13px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-secondary); }
-    .hero-bio { font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 560px; margin-bottom: 2rem; }
-    .hero-bio strong { color: var(--text); font-weight: 500; }
-
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .stat { background: var(--bg-secondary); border-radius: 12px; padding: .9rem 1rem; }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
-    .stat-label { font-size: 12px; color: var(--text-secondary); }
-
-    .sec { margin-top: 3rem; padding-top: 2.5rem; border-top: 0.5px solid var(--border); }
-    .sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
-    .sec-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; }
-    .sec-line { flex: 1; height: 0.5px; background: var(--border); }
-
-    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill { font-size: 13px; padding: 7px 15px; border-radius: 99px; border: 0.5px solid var(--border); color: var(--text); display: inline-flex; align-items: center; gap: 7px; transition: border-color .15s; }
-    .skill:hover { border-color: var(--border-hover); }
-    .skill i { font-size: 14px; color: var(--text-secondary); }
-
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 12px; }
-    .proj { background: var(--bg); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.2rem 1.25rem; position: relative; overflow: hidden; transition: border-color .2s, transform .2s; text-decoration: none; display: block; color: var(--text); }
-    .proj:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-    .proj-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .proj-accent.ts { background: linear-gradient(90deg,#3178c6,#60a5fa); }
-    .proj-accent.js { background: linear-gradient(90deg,#f7df1e,#fbbf24); }
-    .proj-accent.py { background: linear-gradient(90deg,#3572a5,#34d399); }
-    .proj-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: .85rem; margin-top: .35rem; border: 0.5px solid var(--border); background: var(--bg-secondary); }
-    .proj-icon i { font-size: 18px; color: var(--text-secondary); }
-    .proj-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
-    .proj-tag { display: inline-block; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 9px; border-radius: 99px; margin-bottom: .6rem; font-weight: 500; }
-    .tag-ts { background: #dbeafe; color: #1e40af; }
-    .tag-js { background: #fef9c3; color: #854d0e; }
-    .tag-py { background: #dcfce7; color: #166634; }
-    @media (prefers-color-scheme: dark) {
-      .tag-ts { background: #1e3a5f; color: #93c5fd; }
-      .tag-js { background: #3d2f00; color: #fde68a; }
-      .tag-py { background: #14301f; color: #6ee7b7; }
-    }
-    .proj-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
-    .proj-github { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); margin-top: .6rem; padding: 4px 10px; border-radius: 99px; border: 0.5px solid var(--border); transition: border-color .15s; }
-    .proj:hover .proj-github { border-color: var(--border-hover); }
-
-    .journey { display: flex; flex-direction: column; }
-    .jitem { display: grid; grid-template-columns: 90px 1fr; gap: 0 18px; position: relative; }
-    .jitem:not(:last-child)::before { content: ''; position: absolute; left: 89px; top: 24px; bottom: -1rem; width: 0.5px; background: var(--border); }
-    .jyear { font-size: 12px; color: var(--text-secondary); padding-top: 4px; text-align: right; }
-    .jcontent { padding-bottom: 1.75rem; }
-    .jrole { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
-    .jorg { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
-
-    .contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
-    .clink { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-family: 'Outfit', sans-serif; padding: 10px 18px; border-radius: 8px; border: 0.5px solid var(--border); color: var(--text); text-decoration: none; transition: background .15s, border-color .15s; }
-    .clink:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
-    .clink i { font-size: 16px; color: var(--text-secondary); }
-    .clink-email { border-color: var(--border-hover); }
-
-    .form-wrap { background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; border: 0.5px solid var(--border); }
-    .form-title { font-size: 15px; font-weight: 500; margin-bottom: 1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-    .form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-    .form-field label { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-secondary); }
-    .form-field input, .form-field textarea { background: var(--bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 14px; font-family: 'Outfit', sans-serif; color: var(--text); outline: none; transition: border-color .15s; resize: none; }
-    .form-field input:focus, .form-field textarea:focus { border-color: var(--border-hover); }
-    .btn-send { width: 100%; background: var(--text); color: var(--bg); border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; font-family: 'Outfit', sans-serif; cursor: pointer; transition: opacity .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-send:hover { opacity: .85; }
-    .form-msg { font-size: 13px; text-align: center; margin-top: .75rem; min-height: 20px; }
-    .form-msg.success { color: #22c55e; }
-    .form-msg.error { color: #ef4444; }
-
-    footer { text-align: center; font-size: 12px; color: var(--text-secondary); margin-top: 4rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); }
-    @media (max-width: 520px) { .nav-links { display: none; } .form-row { grid-template-columns: 1fr; } }
-  </style>
+  <link rel="stylesheet" href="css/index/style.css" />
 </head>
 <body>
 
@@ -169,14 +68,6 @@
   <section class="sec" id="projects">
     <div class="sec-head"><span class="sec-label">Projects</span><div class="sec-line"></div></div>
     <div class="projects">
-      <a class="proj" href="https://github.com/harishlaptop0123-web/UIGEN.git" target="_blank" rel="noopener">
-        <div class="proj-accent ts"></div>
-        <div class="proj-icon"><i class="ti ti-sparkles"></i></div>
-        <div class="proj-title">UIgen</div>
-        <span class="proj-tag tag-ts">TypeScript</span>
-        <p class="proj-desc">An AI model that generates simple, minimal UI interactions — clean, focused, and fast.</p>
-        <span class="proj-github"><i class="ti ti-brand-github"></i> View on GitHub</span>
-      </a>
       <a class="proj" href="https://github.com/harishlaptop0123-web/ESSENCE-TODO.git" target="_blank" rel="noopener">
         <div class="proj-accent js"></div>
         <div class="proj-icon"><i class="ti ti-checklist"></i></div>

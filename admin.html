@@ -7,71 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #111110; --bg2: #1c1c1a; --bg3: #242422;
-      --text: #f0ede8; --text2: #888884;
-      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
-      --green: #22c55e; --red: #ef4444; --blue: #3b82f6;
-    }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-    /* LOGIN */
-    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-    .login-box { background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; }
-    .login-logo { font-size: 22px; font-weight: 600; margin-bottom: .25rem; }
-    .login-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
-    .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
-    .field input { width: 100%; background: var(--bg3); border: 0.5px solid var(--border2); border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: 'Outfit', sans-serif; color: var(--text); outline: none; transition: border-color .15s; }
-    .field input:focus { border-color: var(--blue); }
-    .btn-login { width: 100%; background: var(--text); color: var(--bg); border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; font-family: 'Outfit', sans-serif; cursor: pointer; transition: opacity .15s; margin-top: .5rem; }
-    .btn-login:hover { opacity: .85; }
-    .login-err { font-size: 13px; color: var(--red); margin-top: .75rem; text-align: center; min-height: 20px; }
-
-    /* DASHBOARD */
-    .dash { display: none; }
-    .topbar { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
-    .topbar-logo { font-size: 16px; font-weight: 600; }
-    .topbar-right { display: flex; align-items: center; gap: 12px; }
-    .badge-online { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
-    .dot-green { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
-    .btn-logout { font-size: 13px; font-family: 'Outfit', sans-serif; background: transparent; border: 0.5px solid var(--border2); color: var(--text2); padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all .15s; }
-    .btn-logout:hover { color: var(--text); border-color: var(--text2); }
-
-    .dash-body { max-width: 900px; margin: 0 auto; padding: 2rem; }
-    .dash-title { font-size: 22px; font-weight: 600; margin-bottom: .25rem; }
-    .dash-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
-
-    /* STATS */
-    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2rem; }
-    .stat-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; }
-    .stat-card-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
-    .stat-card-icon i { font-size: 18px; color: var(--text2); }
-    .stat-card-num { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 4px; }
-    .stat-card-label { font-size: 12px; color: var(--text2); }
-
-    /* MESSAGES */
-    .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-    .sec-title { font-size: 15px; font-weight: 500; }
-    .btn-refresh { font-size: 12px; font-family: 'Outfit', sans-serif; background: transparent; border: 0.5px solid var(--border2); color: var(--text2); padding: 5px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .15s; }
-    .btn-refresh:hover { color: var(--text); }
-
-    .msg-list { display: flex; flex-direction: column; gap: 10px; }
-    .msg-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: border-color .15s; }
-    .msg-card:hover { border-color: var(--border2); }
-    .msg-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .5rem; }
-    .msg-name { font-size: 15px; font-weight: 500; }
-    .msg-time { font-size: 11px; color: var(--text2); }
-    .msg-email { font-size: 13px; color: var(--blue); margin-bottom: .6rem; }
-    .msg-body { font-size: 14px; color: var(--text2); line-height: 1.65; }
-    .msg-empty { text-align: center; padding: 3rem; color: var(--text2); font-size: 14px; }
-
-    .loading { text-align: center; padding: 2rem; color: var(--text2); font-size: 14px; }
-
-    @media (max-width: 520px) { .stats-row { grid-template-columns: 1fr 1fr; } .dash-body { padding: 1rem; } }
-  </style>
+  <link rel="stylesheet" href="css/admin/style.css" />
 </head>
 <body>
 
